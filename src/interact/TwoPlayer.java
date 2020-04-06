@@ -11,6 +11,7 @@ public class TwoPlayer extends Game {
         super();
         this.controller.setAttacker(new Dog("小狗"));
         this.controller.setVictim(new Dog("小猫"));
+
     }
 
 

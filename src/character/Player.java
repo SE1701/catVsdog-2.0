@@ -110,15 +110,8 @@ public class Player {
         return weaponAmount;
     }
 
-    public void setWeaponAmount(ArrayList<Integer> weaponAmount) {
-        this.weaponAmount = weaponAmount;
-    }
-
     public String getName() {
         return name;
-    }
-    public void setName(String name) {
-        this.name = name;
     }
 
 }
