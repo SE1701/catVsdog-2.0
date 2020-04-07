@@ -3,6 +3,7 @@ package character;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import weapon.Weapon;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -54,27 +55,143 @@ public class DogTest {
         assertEquals(1,actual);
     }
 
+    //测试选择工具为 2：强力一击工具 时
+    @Test
+    public void getWeaponChoice_Two() {
+//        fail();
+        String input = "2";
+        int actual;
+        InputStream stdin = System.in;
+        try {
+            System.setIn(new ByteArrayInputStream(input.getBytes()));
+            actual = dog.getWeaponChoice();
+        } finally {
+            System.setIn(stdin);
+        }
+        assertEquals(2,actual);
+    }
+
+    //测试选择工具为 3：地毯轰炸工具 时
+    @Test
+    public void getWeaponChoice_Three() {
+//        fail();
+        String input = "3";
+        int actual;
+        InputStream stdin = System.in;
+        try {
+            System.setIn(new ByteArrayInputStream(input.getBytes()));
+            actual = dog.getWeaponChoice();
+        } finally {
+            System.setIn(stdin);
+        }
+        assertEquals(3,actual);
+    }
+
     //测试有效输入为 0 时
     @Test
-    public void getVerifiedWeaponChoice_ChoseZero() {
+    public void getVerifiedWeaponChoice_OrdinaryEnough() {
 //        fail();
         int expected = 0;
         assertEquals(expected,dog.getVerifiedWeaponChoice(0));
     }
 
-    //测试有效输入为 1 时
+    //输入有效，武器足够
     @Test
-    public void getVerifiedWeaponChoice_ChoseOne() {
+    public void getVerifiedWeaponChoice_PowerUpEnough() {
 //        fail();
         int expected = 1;
         assertEquals(expected,dog.getVerifiedWeaponChoice(1));
+
+    }
+
+
+    //输入有效，武器不够
+    @Test
+    public void getVerifiedWeaponChoice_PowerUpNotEnough() {
+//        fail();
+        //设置武器不足
+        dog.getWeaponAmount().set(Weapon.POWER_UP,0);
+
+        int expected = 0;
+        int actual;
+
+        String inputAgain = "0";
+        InputStream stdin = System.in;
+        try {
+            System.setIn(new ByteArrayInputStream(inputAgain.getBytes()));
+            actual = dog.getVerifiedWeaponChoice(1);
+        }finally {
+            System.setIn(stdin);
+        }
+
+        assertEquals(expected,actual);
+    }
+
+    //输入有效，武器足够
+    @Test
+    public void getVerifiedWeaponChoice_PowerStrikeEnough() {
+//        fail();
+        int expected = 2;
+        assertEquals(expected,dog.getVerifiedWeaponChoice(2));
+    }
+
+
+    //输入有效，武器不够
+    @Test
+    public void getVerifiedWeaponChoice_PowerStrikeNotEnough() {
+//        fail();
+        dog.getWeaponAmount().set(Weapon.POWER_STRIKE,0);
+
+        int expected = 0;
+        int actual;
+
+        String inputAgain = "0";
+        InputStream stdin = System.in;
+        try {
+            System.setIn(new ByteArrayInputStream(inputAgain.getBytes()));
+            actual = dog.getVerifiedWeaponChoice(2);
+        }finally {
+            System.setIn(stdin);
+        }
+
+        assertEquals(expected,actual);
+    }
+
+    //输入有效，武器足够
+    @Test
+    public void getVerifiedWeaponChoice_CarpetBombingEnough() {
+//        fail();
+        int expected = 3;
+        assertEquals(expected,dog.getVerifiedWeaponChoice(3));
+    }
+
+
+    //输入有效，武器不够
+    @Test
+    public void getVerifiedWeaponChoice_CarpetBombingNotEnough() {
+//        fail();
+        dog.getWeaponAmount().set(Weapon.CARPET_BOMBING,0);
+
+        int expected = 0;
+        int actual;
+
+        String inputAgain = "0";
+        InputStream stdin = System.in;
+        try {
+            System.setIn(new ByteArrayInputStream(inputAgain.getBytes()));
+            actual = dog.getVerifiedWeaponChoice(3);
+        }finally {
+            System.setIn(stdin);
+        }
+
+        assertEquals(expected,actual);
     }
 
     //测试无效输入
     @Test
     public void getVerifiedWeaponChoice_InvalidChose() {
 //        fail();
-        String trueInput = "1";
+        String trueInput = "0";
         int actual;
         InputStream stdin = System.in;
         try {
@@ -83,7 +200,7 @@ public class DogTest {
         }finally {
             System.setIn(stdin);
         }
-        assertEquals(1,actual);
+        assertEquals(0,actual);
     }
 
     //测试获取攻击力度
